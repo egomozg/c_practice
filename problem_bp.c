@@ -3,7 +3,7 @@
 //
 #include <stdio.h>
 
-void position_of_high_and_low_bits(int n) {
+void position_of_high_and_low_bits(unsigned n) {
     if (n == 0) { printf("NO\n"); return; }
 
     int high = 31;
@@ -21,7 +21,7 @@ void position_of_high_and_low_bits(int n) {
 }
 
 int main(void) {
-    int input = 0;
+    unsigned input = 0;
     scanf("%d", &input);
     position_of_high_and_low_bits(input);
     return 0;
