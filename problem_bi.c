@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-
 typedef struct dword_t {
     int num_bytes;
     unsigned char* byte;

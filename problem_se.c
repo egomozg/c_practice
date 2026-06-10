@@ -23,7 +23,7 @@ int main()
     struct sieve_t s = init_sieve(n);
     assert(s.sieve != NULL && s.size > 0);
     unsigned long long amount_of_prime_numbers = count_prime_number(s);
-    #if 0
+    #if 1
     print_sieve(s);
     #endif
     free_sieve(&s);
@@ -66,7 +66,7 @@ void print_sieve(struct sieve_t s)
 {
     for (int i = 2; i < s.size; i++)
     {
-        (s.sieve[i] == 0) ? printf("0 ") : printf("1 ");
+        (s.sieve[i] == 0) ? printf("1 ") : printf("0 ");
     }
 }
 
