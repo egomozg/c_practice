@@ -13,8 +13,8 @@ void fill_array(int *arr, const int size) {
 
 void find_min_max(const int *arr, const int size) {
   int i;
-  int min = INT_MAX;
-  int max = INT_MIN;
+  int min = arr[0];
+  int max = arr[0];
   for (i = 0; i < size; ++i) {
     if (min > arr[i])
       min = arr[i];
