@@ -41,11 +41,22 @@ void *find_min(const void *arr, int eltsize, int numelts, cmp_t cmp) {
 }
 
 void swap(void *v1, void *v2, int eltsize) {
-  char buf[eltsize];
-
-  memcpy(buf, v1, eltsize);
-  memcpy(v1, v2, eltsize);
-  memcpy(v2, buf, eltsize);
+  char buf[64]; // buf_size = 64 bytes
+  char *cv1 = (char *)v1;
+  char *cv2 = (char *)v2;
+  unsigned long long n = (unsigned long long)eltsize / 64; // buf_size = 64 bytes
+  unsigned long long m = (unsigned long long)eltsize % 64; // buf_size = 64 bytes
+  while (n > 0) {
+    memcpy(buf, cv1, 64);
+    memcpy(cv1, cv2, 64);
+    memcpy(cv2, buf, 64);
+    cv1 += 64;
+    cv2 += 64;
+    n -= 64;
+  }
+  memcpy(buf, cv1, m);
+  memcpy(cv1, cv2, m);
+  memcpy(cv2, buf, m);
 }
 
 int selstep(void *parr, int eltsize, int numelts, int nsorted, cmp_t cmp) {
