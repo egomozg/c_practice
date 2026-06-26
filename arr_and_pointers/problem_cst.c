@@ -26,7 +26,7 @@ int main(void) {
     return 1;
   }
 	fill_bucket(bucket, bucket_size, arr, size);
-  print_array(bucket, bucket_size);
+    print_array(bucket, bucket_size);
 
 	free(arr);
 	free(bucket);
