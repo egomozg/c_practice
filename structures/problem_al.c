@@ -1,6 +1,8 @@
 //
-// not finished yet
+// подсмотренное решение, даже поленился
+// итеративный reverse написать
 //
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,6 +16,7 @@ struct node_t {
 struct node_t *read_list(FILE *inp);
 void delete_list(struct node_t *top);
 void print_list(const struct node_t *top);
+struct node_t * reverse(struct node_t *top);
 
 int main(void) {
   FILE *f;
@@ -33,6 +36,7 @@ int main(void) {
 
 struct node_t *read_list(FILE *inp) {
   struct node_t *top_even = NULL, *top_odd = NULL, *node;
+  struct node_t *last_odd = NULL;
   for (;;) {
     int res, n = 0;
     res = fscanf(inp, "%d", &n);
@@ -41,20 +45,23 @@ struct node_t *read_list(FILE *inp) {
     if (res != 1) {
       continue;
     }
-    node = calloc(1, sizeof(struct node_t))
+    node = (struct node_t *)calloc(1, sizeof(struct node_t));
+    node->data = n;
     if (n % 2 == 0) {
-        node->next = top_even;
-        top_even = node;
-    }
-    else {
-        node->next = top_odd;
-        top_odd = node;
+      node->next = top_even;
+      top_even = node;
+    } else {
+      if (top_odd == NULL)
+        last_odd = node;
+      node->next = top_odd;
+      top_odd = node;
     }
   }
-  while (node->next != NULL) {
-    node = node->next;
-  }
-  return top_even;
+  if (last_odd == NULL)
+      return reverse(top_even);
+  assert((last_odd->next) == NULL);
+  last_odd->next = top_even;
+  return reverse(top_odd);
 }
 
 void delete_list(struct node_t *top) {
@@ -71,8 +78,8 @@ void delete_list(struct node_t *top) {
 }
 
 void print_list(const struct node_t *top) {
-    const struct node_t *i = top;
-    if (i == NULL) {
+  const struct node_t *i = top;
+  if (i == NULL) {
     return;
   }
   while (i != NULL) {
@@ -80,4 +87,14 @@ void print_list(const struct node_t *top) {
     i = i->next;
   }
   printf("\n");
+}
+
+struct node_t * reverse(struct node_t *top) {
+    struct node_t *xs;
+    if (NULL == top) return NULL;
+    if (NULL == top->next) return top;
+    xs = reverse(top->next);
+    top->next->next = top;
+    top->next = NULL;
+    return xs;
 }
